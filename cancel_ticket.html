@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cancel Train Ticket - Railway Management System</title>
+</head>
+<body style="font-family:'Poppins',sans-serif;margin:0;padding:0;
+  background:radial-gradient(circle at top right,#001233 0%,#001a4d 35%,#002b7a 70%,#000814 100%);
+  background-attachment:fixed;min-height:100vh;display:flex;justify-content:center;align-items:center;
+  overflow:hidden;position:relative;">
+
+  <!-- Neon glow orbs -->
+  <div style="position:absolute;top:15%;left:10%;width:220px;height:220px;
+    background:radial-gradient(circle,#00aaff,transparent 70%);
+    filter:blur(120px);opacity:0.5;"></div>
+  <div style="position:absolute;bottom:10%;right:8%;width:180px;height:180px;
+    background:radial-gradient(circle,#0077ff,transparent 70%);
+    filter:blur(110px);opacity:0.45;"></div>
+
+  <div style="width:380px;background:rgba(255,255,255,0.06);
+    border:1px solid rgba(0,170,255,0.35);
+    border-radius:16px;backdrop-filter:blur(14px);
+    padding:30px 28px;
+    box-shadow:0 0 25px rgba(0,150,255,0.25);
+    text-align:center;animation:fadeIn 1s ease;
+    color:#dbe8ff;position:relative;">
+
+    <!-- Back button -->
+    <div style="text-align:left;margin-bottom:10px;">
+      <a href="user_portal" style="display:inline-block;padding:8px 16px;
+        font-size:14px;color:#eaf7ff;
+        background:linear-gradient(90deg,#007bff,#00baff);
+        border:none;border-radius:8px;text-decoration:none;
+        box-shadow:0 0 12px rgba(0,170,255,0.5);
+        transition:all 0.3s ease;">
+        ← Back to Dashboard
+      </a>
+    </div>
+
+    <img src="https://img.icons8.com/color/48/train-ticket.png" alt="Train Icon"
+      style="width:50px;margin-bottom:12px;filter:drop-shadow(0 0 6px #00b7ff);">
+    <h2 style="margin-bottom:18px;color:#66ccff;">Cancel Ticket</h2>
+
+    <form method="POST" style="margin-top:10px;">
+      <label for="pnr_number"
+        style="display:block;font-weight:600;text-align:left;margin:15px 0 6px;color:#bbd8ff;">Enter Your PNR Number:</label>
+      <input type="text" id="pnr_number" name="pnr_number" placeholder="e.g. AB12CD3456" required
+        style="width:100%;padding:10px 8px;border-radius:6px;border:1.5px solid #00aaff;
+        background:rgba(255,255,255,0.1);color:#fff;font-size:1em;transition:0.3s;">
+      
+      <button type="submit"
+        style="width:100%;margin-top:20px;background:linear-gradient(90deg,#007bff,#00baff);
+        color:white;font-size:1.05em;border:none;border-radius:6px;padding:10px 0;
+        cursor:pointer;transition:0.3s;box-shadow:0 0 15px rgba(0,180,255,0.4);">
+        <img src="https://img.icons8.com/fluency/24/delete-forever.png" alt="Cancel Icon"
+          style="vertical-align:middle;margin-right:6px;">Cancel Ticket
+      </button>
+    </form>
+
+    <div style="margin-top:15px;color:#9acfff;font-size:0.95em;">
+      Enter your 10-character PNR to cancel your booking.
+    </div>
+
+    {% if msg %}
+    <div style="margin-top:18px;font-weight:600;
+      color:{{ 'lightgreen' if 'success' in msg.lower() else '#ff6b6b' }};">
+      {{ msg }}
+    </div>
+    {% endif %}
+  </div>
+
+  <style>
+    @keyframes fadeIn {
+      from {opacity:0;transform:translateY(20px);}
+      to {opacity:1;transform:translateY(0);}
+    }
+  </style>
+</body>
+</html>

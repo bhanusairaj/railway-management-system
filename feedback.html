@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>User Feedback (Admin Panel)</title>
+</head>
+<body style="font-family:'Poppins',sans-serif;margin:0;
+  background:linear-gradient(135deg,#001a33,#003366,#001a33);
+  color:#eaf4ff;">
+
+  <div style="max-width:900px;margin:60px auto;
+    background:rgba(255,255,255,0.08);
+    border-radius:14px;
+    box-shadow:0 0 25px rgba(0,150,255,0.3);
+    padding:30px 34px;
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(0,150,255,0.25);">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <a href='{{ url_for("admin_dashboard") }}' 
+        style="display:inline-flex;align-items:center;gap:8px;
+        background:linear-gradient(90deg,#007bff,#00aaff);
+        color:#fff;text-decoration:none;
+        padding:9px 18px;border-radius:6px;font-weight:500;
+        transition:0.3s;">
+        <img src='https://img.icons8.com/fluency/24/return.png' style="vertical-align:middle;">
+        Back
+      </a>
+      <img src="https://img.icons8.com/color/48/feedback.png" style="width:48px;filter:drop-shadow(0 0 6px #00baff);">
+    </div>
+
+    <h2 style="text-align:center;margin:22px 0 20px;
+      color:#66ccff;text-shadow:0 0 6px #0099ff;">
+      User Feedbacks
+    </h2>
+
+    {% if msg %}
+      <div style="text-align:center;color:#72ff8b;font-weight:600;margin-bottom:18px;">
+        {{ msg }}
+      </div>
+    {% endif %}
+
+    <table style="width:100%;border-collapse:collapse;font-size:0.94em;
+      background:rgba(255,255,255,0.05);
+      border-radius:8px;overflow:hidden;box-shadow:0 0 10px rgba(0,150,255,0.1);">
+      <tr style="background:linear-gradient(90deg,#0077ff,#00aaff);color:#fff;">
+        <th style="padding:10px 12px;text-align:left;">Subject</th>
+        <th style="padding:10px 12px;text-align:left;">Message</th>
+        <th style="padding:10px 12px;text-align:left;">User</th>
+        <th style="padding:10px 12px;text-align:left;">Date</th>
+        <th style="padding:10px 12px;text-align:left;">Status</th>
+        <th style="padding:10px 12px;text-align:left;">Action</th>
+      </tr>
+
+      {% for f in feedbacks %}
+      <tr style="background:rgba(0,20,50,0.45);
+        border-bottom:1px solid rgba(255,255,255,0.08);
+        transition:0.3s;"
+        onmouseover="this.style.background='rgba(0,150,255,0.15)';"
+        onmouseout="this.style.background='rgba(0,20,50,0.45)';">
+
+        <td style="padding:10px 12px;">{{ f.Subject }}</td>
+        <td style="max-width:260px;white-space:pre-wrap;padding:10px 12px;">{{ f.Message }}</td>
+        <td style="padding:10px 12px;">{{ f.UserName or 'Anonymous' }}</td>
+        <td style="padding:10px 12px;">{{ f.SubmissionDate }}</td>
+        <td style="padding:10px 12px;display:flex;align-items:center;gap:6px;">
+          <img src="https://img.icons8.com/fluency/20/checked--v1.png" 
+            style="width:20px;filter:drop-shadow(0 0 2px #00baff);">
+          {{ f.Status }}
+        </td>
+        <td style="padding:10px 12px;">
+          <form method="POST" style="display:inline;">
+            <input type="hidden" name="feedback_id" value="{{ f.FeedbackID }}">
+            <select name="status" 
+              style="padding:6px 8px;border-radius:5px;border:none;
+              background:#003d66;color:#fff;
+              box-shadow:0 0 4px rgba(0,140,255,0.4);">
+              <option value="New" {% if f.Status=='New' %}selected{% endif %}>New</option>
+              <option value="In Progress" {% if f.Status=='In Progress' %}selected{% endif %}>In Progress</option>
+              <option value="Resolved" {% if f.Status=='Resolved' %}selected{% endif %}>Resolved</option>
+            </select>
+            <button type="submit"
+              style="padding:6px 12px;margin-left:6px;
+              background:linear-gradient(90deg,#0094ff,#00cfff);
+              border:none;border-radius:5px;color:#fff;
+              cursor:pointer;font-size:0.9em;
+              transition:0.3s;"
+              onmouseover="this.style.background='linear-gradient(90deg,#00baff,#33d3ff)';"
+              onmouseout="this.style.background='linear-gradient(90deg,#0094ff,#00cfff)';">
+              <img src="https://img.icons8.com/fluency/20/sent.png" style="vertical-align:middle;margin-right:4px;">
+              Update
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

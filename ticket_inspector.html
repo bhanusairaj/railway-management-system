@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ticket Inspector Panel</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: radial-gradient(circle at top left, #01142c, #023d7a, #010f23);
+      background-size: 300% 300%;
+      animation: gradientShift 15s ease infinite;
+      color: #e9f4ff;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      box-shadow: 0 0 25px rgba(0, 153, 255, 0.3);
+      padding: 35px;
+      backdrop-filter: blur(10px);
+    }
+
+    h2 {
+      color: #6fc3ff;
+      text-shadow: 0 0 10px #00aaff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 9px 20px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #007bff, #00b4ff);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      box-shadow: 0 0 10px rgba(0,150,255,0.4);
+      transition: 0.25s;
+    }
+
+    .back-btn:hover {
+      box-shadow: 0 0 18px #00baff;
+      transform: translateY(-2px);
+    }
+
+    input, button, select {
+      padding: 8px 10px;
+      margin: 4px 6px 10px 0;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 150, 255, 0.4);
+      background: rgba(255,255,255,0.08);
+      color: #e6f4ff;
+    }
+
+    input::placeholder { color: #a9c6e9; }
+
+    button {
+      background: linear-gradient(90deg, #007bff, #00b4ff);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      box-shadow: 0 0 10px #00b4ff;
+      transform: translateY(-2px);
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 16px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.25);
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    th {
+      background: rgba(0, 120, 255, 0.25);
+      color: #bde4ff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .fine, .checked {
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 12px 16px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0, 153, 255, 0.2);
+    }
+
+    .success { color: #56ff80; text-shadow: 0 0 6px #25c64a; }
+
+    label { color: #aad8ff; font-weight: 500; }
+
+    .panel-icon {
+      width: 36px;
+      vertical-align: middle;
+      margin-right: 8px;
+      filter: drop-shadow(0 0 4px #00b4ff);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">← Back to Dashboard</a>
+    <h2><img src="https://img.icons8.com/fluency/48/ticket.png" class="panel-icon">Ticket Inspector Panel</h2>
+
+    {% if action_msg %}
+      <div class="success">{{action_msg}}</div>
+    {% endif %}
+
+    <form method="POST">
+      <input type="text" name="pnr" placeholder="Enter PNR Number" {% if ticket_info %}value="{{ticket_info.PNR_Number}}"{% endif %}/>
+      <button type="submit">Search</button>
+    </form>
+
+    {% if msg %}<div style="color:#ff7373;">{{ msg }}</div>{% endif %}
+
+    {% if ticket_info %}
+      <table>
+        <tr><th>PNR</th><td>{{ticket_info.PNR_Number}}</td></tr>
+        <tr><th>Passenger</th><td>{{ticket_info.UserName}}</td></tr>
+        <tr><th>Train</th><td>{{ticket_info.TrainNumber}} ({{ticket_info.TrainName}})</td></tr>
+        <tr><th>Journey Date</th><td>{{ticket_info.JourneyDate}}</td></tr>
+        <tr><th>Class</th><td>{{ticket_info.TicketClass}}</td></tr>
+        <tr><th>Status</th><td>{{ticket_info.BookingStatus}} ({{ticket_info.PaymentStatus}})</td></tr>
+      </table>
+
+      <div class="checked">
+        <form method="POST">
+          <input type="hidden" name="booking_id" value="{{ticket_info.BookingID}}">
+          <label>Flag an Issue (optional): </label>
+          <input type="text" name="issue_flagged" placeholder="e.g. Wrong class" />
+          <button type="submit" name="mark_checked">Mark as Checked</button>
+        </form>
+      </div>
+
+      <div class="fine">
+        <form method="POST">
+          <input type="hidden" name="booking_id" value="{{ticket_info.BookingID}}">
+          <label>Fine Amount: </label>
+          <input type="number" step="0.01" min="1" name="fine_amount" required style="width:90px;">
+          <label>Reason: </label>
+          <input type="text" name="fine_reason" placeholder="e.g. No valid ticket" required>
+          <button type="submit" name="issue_fine">Issue Fine</button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>

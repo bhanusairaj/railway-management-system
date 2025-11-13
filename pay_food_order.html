@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pay for Food Order</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top right, #001233, #000b24, #000814);
+      color: #dbe8ff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 420px;
+      width: 90%;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.25);
+      padding: 35px;
+      margin-top: 120px;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.8s ease;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      text-decoration: none;
+      background: rgba(0, 174, 255, 0.15);
+      border: 1px solid #00bfff;
+      color: #00d0ff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+      text-shadow: 0 0 10px #00d0ff;
+    }
+
+    .back-btn:hover {
+      background: #00bfff;
+      color: #fff;
+      box-shadow: 0 0 15px #00bfff;
+    }
+
+    h2 {
+      color: #00bfff;
+      text-align: center;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px #00d0ff;
+    }
+
+    .summary {
+      margin-bottom: 20px;
+      background: rgba(0, 100, 255, 0.15);
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 0.95em;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      background: rgba(255, 255, 255, 0.08);
+      color: #dbe8ff;
+      font-size: 1em;
+      outline: none;
+    }
+
+    select:focus {
+      box-shadow: 0 0 8px #00bfff;
+    }
+
+    button {
+      background: linear-gradient(90deg, #007bff, #00baff);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #0056b3, #008cff);
+      box-shadow: 0 0 20px #00bfff;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <a href="javascript:history.back()" class="back-btn">← Back</a>
+
+  <div class="container">
+    <h2>Pay for Order</h2>
+    <div class="summary">
+      <strong>Item:</strong> {{ order.FoodItem }}<br>
+      <strong>Quantity:</strong> {{ order.Quantity }}<br>
+      <strong>Total Amount:</strong> ₹{{ order.TotalAmount }}
+    </div>
+    <form method="POST">
+      <select name="payment_method" required>
+        <option value="">Select Payment</option>
+        <option value="UPI">UPI</option>
+        <option value="Credit Card">Credit Card</option>
+      </select>
+      <button type="submit">Pay Now</button>
+    </form>
+  </div>
+</body>
+</html>

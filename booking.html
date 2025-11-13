@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Train Ticket - Railway Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #001f3f 0%, #004080 50%, #00122e 100%);
+      background-image: url('https://images.unsplash.com/photo-1501612780327-45045538702b?auto=format&fit=crop&w=1470&q=80'),
+                        radial-gradient(circle at 20% 30%, rgba(0, 0, 255, 0.3), transparent 60%);
+      background-blend-mode: overlay;
+      background-size: cover;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      color: #102a53;
+      flex-direction: column;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin: 25px 0 0 40px;
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(90deg, #007bff, #00bfff);
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95em;
+      box-shadow: 0 0 15px rgba(0, 180, 255, 0.5);
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.7);
+    }
+
+    .booking-container {
+      width: 90%;
+      max-width: 750px;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 18px;
+      margin: 30px auto 60px auto;
+      padding: 40px 45px 25px 45px;
+      box-shadow: 0 0 25px rgba(0, 102, 255, 0.35);
+      animation: fadeIn 0.8s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    h2 {
+      text-align: center;
+      color: #00b0ff;
+      font-weight: 600;
+      margin-bottom: 25px;
+      text-shadow: 0 0 8px rgba(0, 191, 255, 0.7);
+    }
+
+    label {
+      font-weight: 600;
+      color: #0b2c5a;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #bcd2ff;
+      border-radius: 6px;
+      margin-top: 6px;
+      margin-bottom: 17px;
+      font-size: 1em;
+      background: #f0f6ff;
+      color: black;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+      outline: none;
+    }
+
+    button[type="submit"],
+    input[type="submit"][name="confirm_booking"] {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      background: linear-gradient(90deg, #007bff, #00bfff);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 140, 255, 0.4);
+    }
+
+    button:hover,
+    input[type="submit"][name="confirm_booking"]:hover {
+      background: linear-gradient(90deg, #0066ff, #00aaff);
+      transform: translateY(-2px);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #f9fbff;
+      border-radius: 12px;
+      margin-top: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,50,0.2);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #e1e8f5;
+    }
+
+    th {
+      background-color: #e2e9ff;
+      color: #003cba;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #eef4ff;
+    }
+
+    select[name="ticket_class"] {
+      background: #eaf2fe;
+      color: black;
+      border: 1px solid #ccc;
+      padding: 6px 8px;
+      border-radius: 6px;
+      width: 80%;
+      margin-bottom: 8px;
+    }
+
+    .no-trains {
+      text-align: center;
+      margin-top: 25px;
+      color: #e74c3c;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="user_portal" class="back-btn">← Back to Dashboard</a>
+
+  <div class="booking-container">
+    <h2>Book Train Ticket</h2>
+    <form method="POST">
+      <label for="from_station">From Station:</label>
+      <input list="stations" name="from_station" id="from_station" placeholder="e.g., Chennai Central" required />
+      
+      <label for="to_station">To Station:</label>
+      <input list="stations" name="to_station" id="to_station" placeholder="e.g., Mumbai CST" required />
+
+      <datalist id="stations">
+        {% for station in station_list %}
+          <option value="{{ station.StationName }}">
+        {% endfor %}
+      </datalist>
+
+      <label for="journey_date">Date of Journey:</label>
+      <input type="date" name="journey_date" id="journey_date" required />
+
+      <button type="submit">
+        <img src="https://img.icons8.com/fluency/24/search.png" style="vertical-align: middle; margin-right: 6px" />
+        Search Trains
+      </button>
+    </form>
+
+    {% if train_results %}
+    <h3 style="text-align:center;color:#00b0ff;margin-top:25px;">
+      <img src="https://img.icons8.com/color/32/train.png" style="vertical-align: middle; margin-right: 6px;" />
+      Available Trains
+    </h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Number</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Total</th>
+          <th>AC</th>
+          <th>Sleeper</th>
+          <th>General</th>
+          <th>Class & Book</th>
+        </tr>
+        {% for train in train_results %}
+        <tr>
+          <td>{{ train.TrainID }}</td>
+          <td>{{ train.TrainNumber }}</td>
+          <td>{{ train.TrainName }}</td>
+          <td>{{ train.TrainType }}</td>
+          <td>{{ train.TotalSeats }}</td>
+          <td>{{ train.AC_Seats }}</td>
+          <td>{{ train.Sleeper_Seats }}</td>
+          <td>{{ train.General_Seats }}</td>
+          <td>
+            <form method="POST" action="{{ url_for('booking') }}">
+              <input type="hidden" name="train_id" value="{{ train.TrainID }}" />
+              <input type="hidden" name="from_station" value="{{ from_station }}" />
+              <input type="hidden" name="to_station" value="{{ to_station }}" />
+              <input type="hidden" name="journey_date" value="{{ journey_date }}" />
+              <select name="ticket_class" required>
+                <option value="">Select</option>
+                <option value="AC">AC</option>
+                <option value="Sleeper">Sleeper</option>
+                <option value="General">General</option>
+              </select>
+              <input type="submit" name="confirm_booking" value="Book" />
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% elif request.method == 'POST' %}
+    <p class="no-trains">❌ No trains found for this route.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

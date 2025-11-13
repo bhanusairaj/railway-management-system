@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #020024, #090979, #00d4ff);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .dashboard-container {
+      width: 90%;
+      margin: 40px auto;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.2em;
+      text-shadow: 0 0 10px cyan;
+      margin-bottom: 20px;
+    }
+    .logout-btn {
+      position: absolute;
+      right: 40px;
+      top: 30px;
+      background: #ff0040;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      box-shadow: 0 0 10px #ff0040;
+    }
+    .logout-btn:hover {
+      background: #ff3370;
+      box-shadow: 0 0 20px #ff3370;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+    .dashboard-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      transition: all 0.4s ease;
+      backdrop-filter: blur(10px);
+    }
+    .dashboard-card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 0 25px cyan;
+    }
+    .dashboard-card img {
+      width: 60px;
+      filter: drop-shadow(0 0 5px cyan);
+      margin-bottom: 15px;
+    }
+    .dashboard-card a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1.1em;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .dashboard-card a:hover {
+      color: cyan;
+      text-shadow: 0 0 10px cyan;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <h1>Welcome, {{ adminname }}</h1>
+    <a class="logout-btn" href="{{ url_for('logout') }}">Logout</a>
+
+    <div class="dashboard-grid">
+      <div class="dashboard-card">
+        <img src="https://img.icons8.com/color/96/train.png" alt="Train">
+        <a href="{{ url_for('train_info') }}">Train Information</a>
+      </div>
+
+      <div class="dashboard-card">
+        <img src="https://img.icons8.com/color/96/conference-call.png" alt="Passenger">
+        <a href="{{ url_for('passenger_info') }}">Passenger Information</a>
+      </div>
+
+      <div class="dashboard-card">
+        <img src="https://img.icons8.com/color/96/feedback.png" alt="Feedback">
+        <a href="{{ url_for('feedback') }}">Feedback / Comments</a>
+      </div>
+
+      
+      <div class="dashboard-card">
+        <img src="https://img.icons8.com/color/96/construction-worker.png" alt="Crew">
+        <a href="{{ url_for('crew_management') }}">Crew Management</a>
+      </div>
+
+      
+      <div class="dashboard-card">
+        <img src="https://img.icons8.com/color/96/route.png" alt="Routes">
+        <a href="{{ url_for('routes') }}">Routes & Train Schedule</a>
+      </div>
+
+      
+
+      <div class="dashboard-card">
+        <img src="https://img.icons8.com/color/96/ticket.png" alt="Ticket">
+        <a href="{{ url_for('ticket_inspector') }}">Ticket Inspector</a>
+      </div>
+
+    
+
+      <div class="dashboard-card">
+        <img src="https://img.icons8.com/color/96/restaurant.png" alt="Catering">
+        <a href="{{ url_for('catering') }}">Catering</a>
+      </div>
+
+      <div class="dashboard-card">
+        <img src="https://img.icons8.com/color/96/money.png" alt="Revenue">
+        <a href="{{ url_for('revenue_management') }}">Revenue Management</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Catering - Food Orders</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: radial-gradient(circle at top left, #001a33, #013f75, #002244);
+      background-size: 300% 300%;
+      animation: bgShift 12s ease infinite;
+      color: #eaf7ff;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      box-shadow: 0 0 20px rgba(0, 153, 255, 0.3);
+      padding: 32px;
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    h2 {
+      color: #6ecbff;
+      text-shadow: 0 0 12px #00b4ff;
+      text-align: center;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .icon {
+      width: 38px;
+      height: 38px;
+      filter: drop-shadow(0 0 6px #00baff);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      color: #e2f3ff;
+    }
+
+    th {
+      background: rgba(0, 153, 255, 0.3);
+      color: #bde8ff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255,255,255,0.05);
+    }
+
+    tr:hover {
+      background: rgba(0, 153, 255, 0.2);
+      transition: 0.2s;
+    }
+
+    .status {
+      font-weight: 600;
+      text-shadow: 0 0 5px #00ffee;
+    }
+
+    /* Back button styling */
+    .back-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 15px;
+      color: #eaf7ff;
+      background: linear-gradient(90deg, #0077ff, #00d4ff);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 12px rgba(0, 170, 255, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(90deg, #00d4ff, #0077ff);
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.8);
+      transform: scale(1.05);
+    }
+
+    .btn-container {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="btn-container">
+      <a href="admin_dashboard" class="back-btn">← Back to Dashboard</a>
+    </div>
+
+    <h2>
+      <img src="https://img.icons8.com/fluency/48/meal.png" alt="Food Icon" class="icon">
+      Catering - Food Orders
+    </h2>
+
+    <table>
+      <tr>
+        <th>Order ID</th>
+        <th>Passenger Name</th>
+        <th>Food Item</th>
+        <th>Quantity</th>
+        <th>Total (₹)</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.OrderID }}</td>
+        <td>{{ order.UserName }}</td>
+        <td>{{ order.FoodItem }}</td>
+        <td>{{ order.Quantity }}</td>
+        <td>{{ order.TotalAmount }}</td>
+        <td>{{ order.OrderDate }}</td>
+        <td class="status">{{ order.Status }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  </div>
+</body>
+</html>

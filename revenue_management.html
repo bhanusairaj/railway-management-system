@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Revenue Management</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #001f3f, #003366, #005f99);
+      color: #f1f6fb;
+      background-attachment: fixed;
+    }
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 32px;
+      border-radius: 15px;
+      box-shadow: 0 4px 25px rgba(0, 170, 255, 0.3);
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+    h2 {
+      color: #a9d8ff;
+      text-shadow: 0 0 8px #00aaff;
+    }
+    .revenue-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 51, 102, 0.4);
+      border-radius: 10px;
+      margin: 15px 0;
+      padding: 15px 20px;
+      box-shadow: inset 0 0 10px rgba(0, 170, 255, 0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .revenue-box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(0, 170, 255, 0.6);
+    }
+    .revenue-box img {
+      width: 30px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .total {
+      font-weight: 700;
+      color: #e0f7ff;
+      font-size: 1.1em;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 9px 22px;
+      border-radius: 6px;
+      background: #2574c0;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.03em;
+      text-decoration: none;
+      border: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .back-btn:hover {
+      background: #143563;
+      transform: scale(1.03);
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">← Back to Dashboard</a>
+    <h2>💠 Revenue Management Dashboard</h2>
+
+    <div class="revenue-box">
+      <div>
+        <img src="https://img.icons8.com/fluency/48/money-bag.png" alt="ticket">
+        <strong>Total Ticket Revenue:</strong>
+      </div>
+      <span class="total">₹{{ booking_revenue }}</span>
+    </div>
+
+    <div class="revenue-box">
+      <div>
+        <img src="https://img.icons8.com/color/48/meal.png" alt="food">
+        <strong>Total Food Revenue:</strong>
+      </div>
+      <span class="total">₹{{ food_revenue }}</span>
+    </div>
+
+    <div class="revenue-box">
+      <div>
+        <strong>Total Fine Revenue (Paid only):</strong>
+      </div>
+      <span class="total">₹{{ fine_revenue }}</span>
+    </div>
+
+    <div class="revenue-box" style="background: rgba(0, 150, 255, 0.4);">
+      <div>
+        <strong>Total Combined Revenue:</strong>
+      </div>
+      <span class="total">₹{{ total_revenue }}</span>
+    </div>
+  </div>
+</body>
+</html>

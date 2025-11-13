@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Passenger Information - Railway Management System</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f8fb;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 54px auto;
+      background: #fff;
+      border-radius: 11px;
+      box-shadow: 0 2px 12px #aac;
+      padding: 28px 34px;
+    }
+
+    h2 {
+      color: #205286;
+      font-size: 1.45em;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 9px 20px;
+      border-radius: 6px;
+      background: #286ce6;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1em;
+      text-decoration: none;
+      border: none;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #174986;
+      text-decoration: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.95em;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e4eaf3;
+    }
+
+    th {
+      background: #205286;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background: #f8fbff;
+    }
+
+    tr:hover {
+      background: #eaf3ff;
+    }
+
+    .delete-btn {
+      color: #fff;
+      background: #e63746;
+      border: none;
+      border-radius: 5px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 0.95em;
+      transition: background 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #b81220;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">&#8592; Back to Dashboard</a>
+    <h2>All Passengers Information (with Booking Summary)</h2>
+    <table>
+      <tr>
+        <th>User ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th># Trains Booked</th>
+        <th># Total Bookings</th>
+        <th>Action</th>
+      </tr>
+      {% for p in passengers %}
+      <tr>
+        <td>{{ p.UserID }}</td>
+        <td>{{ p.UserName }}</td>
+        <td>{{ p.UserEmail }}</td>
+        <td>{{ p.UserMobile }}</td>
+        <td>{{ p.DateOfBirth }}</td>
+        <td>{{ p.Gender }}</td>
+        <td>{{ p.NumTrainsBooked }}</td>
+        <td>{{ p.TotalBookings }}</td>
+        <td>
+          <form action="{{ url_for('delete_passenger', userid=p.UserID) }}" method="post" style="display:inline;">
+            <button type="submit" class="delete-btn" onclick="return confirm('Delete this passenger?');">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

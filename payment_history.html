@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Payment History - Railway Management System</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0; padding: 0;
+      background: radial-gradient(circle at top right, #001233 0%, #001a4d 35%, #002b7a 70%, #000814 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      color: #dbe8ff;
+    }
+
+    /* Neon glow orbs */
+    body::before, body::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+    }
+    body::before {
+      top: 15%; left: 10%;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, #00aaff, transparent 70%);
+    }
+    body::after {
+      bottom: 10%; right: 8%;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, #0077ff, transparent 70%);
+      filter: blur(110px);
+      opacity: 0.45;
+    }
+
+    .container {
+      max-width: 850px;
+      width: 90%;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(0, 170, 255, 0.35);
+      border-radius: 16px;
+      backdrop-filter: blur(14px);
+      padding: 35px 40px 28px 40px;
+      box-shadow: 0 0 25px rgba(0, 150, 255, 0.25);
+      animation: fadeIn 1s ease;
+      position: relative;
+    }
+
+    .back-btn {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(90deg, #007bff, #00baff);
+      color: white;
+      font-size: 0.95em;
+      padding: 8px 18px;
+      border-radius: 8px;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      box-shadow: 0 0 12px rgba(0, 170, 255, 0.4);
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(90deg, #00baff, #007bff);
+      transform: scale(1.05);
+    }
+
+    h2 {
+      color: #66ccff;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00b7ff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      font-size: 0.95em;
+      color: #dbe8ff;
+    }
+
+    th, td {
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 12px 14px;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(0, 100, 255, 0.2);
+      color: #80d4ff;
+      text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    tr:hover {
+      background: rgba(0, 170, 255, 0.15);
+      transition: 0.3s;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 1.05em;
+      color: #9acfff;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="user_portal" class="back-btn">← Back to Dashboard</a>
+
+    <h2>Payment History</h2>
+
+    {% if payments %}
+      <table>
+        <tr>
+          <th>PNR</th>
+          <th>Booking Date</th>
+          <th>Journey Date</th>
+          <th>Fare (₹)</th>
+          <th>Payment</th>
+          <th>Status</th>
+        </tr>
+        {% for pay in payments %}
+        <tr>
+          <td>{{ pay.PNR_Number }}</td>
+          <td>{{ pay.BookingDate }}</td>
+          <td>{{ pay.JourneyDate }}</td>
+          <td>{{ pay.TotalFare }}</td>
+          <td>{{ pay.PaymentStatus }}</td>
+          <td>{{ pay.BookingStatus }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No payment records found.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>My Bookings - Railway Management System</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0; padding: 0;
+      background: radial-gradient(circle at top right, #001233 0%, #001a4d 35%, #002b7a 70%, #000814 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      color: #dbe8ff;
+      position: relative;
+    }
+
+    /* Futuristic neon glows */
+    body::before, body::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+      z-index: 0;
+    }
+    body::before {
+      top: 15%; left: 10%;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, #00aaff, transparent 70%);
+    }
+    body::after {
+      bottom: 10%; right: 8%;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, #0077ff, transparent 70%);
+      filter: blur(110px);
+      opacity: 0.45;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 25px;
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(90deg, #007bff, #00baff);
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95em;
+      box-shadow: 0 0 15px rgba(0, 180, 255, 0.5);
+      transition: 0.3s;
+      z-index: 2;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.7);
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 30px;
+      color: #66ccff;
+      font-weight: 700;
+      text-shadow: 0 0 15px #00b7ff;
+      z-index: 2;
+    }
+
+    .table-container {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(0, 170, 255, 0.35);
+      border-radius: 16px;
+      backdrop-filter: blur(15px);
+      padding: 25px;
+      box-shadow: 0 0 25px rgba(0, 150, 255, 0.3);
+      width: 90%;
+      max-width: 850px;
+      margin: 20px auto 40px auto;
+      animation: fadeIn 1s ease;
+      z-index: 2;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95em;
+      color: #dbe8ff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 12px 14px;
+      text-align: center;
+      word-break: break-word;
+    }
+
+    th {
+      background: rgba(0, 100, 255, 0.3);
+      color: #80d4ff;
+      text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    tr:hover {
+      background: rgba(0, 170, 255, 0.18);
+      transition: 0.3s;
+    }
+
+    td:nth-child(6) {
+      color: #7affb2;
+      font-weight: 600;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 15px;
+      color: #9acfff;
+      font-size: 1.05em;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <a href="user_portal" class="back-btn">← Back to Dashboard</a>
+
+  <h2> My Bookings</h2>
+
+  <div class="table-container">
+    {% if bookings %}
+    <table>
+      <tr>
+        <th>PNR</th>
+        <th>Journey Date</th>
+        <th>Train Name</th>
+        <th>Train Number</th>
+        <th>Status</th>
+        <th>Total Fare</th>
+      </tr>
+      {% for booking in bookings %}
+      <tr>
+        <td>{{ booking.PNR_Number }}</td>
+        <td>{{ booking.JourneyDate }}</td>
+        <td>{{ booking.TrainName }}</td>
+        <td>{{ booking.TrainNumber }}</td>
+        <td>{{ booking.BookingStatus }}</td>
+        <td>₹{{ booking.TotalFare }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p>No bookings found.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Food Order - Railway Management System</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #001233, #000b24, #000814);
+      color: #dbe8ff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 25% 25%, rgba(0, 128, 255, 0.25), transparent 70%),
+                  radial-gradient(circle at 75% 75%, rgba(0, 255, 255, 0.15), transparent 70%);
+      animation: move 10s infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes move {
+      from { transform: translate(0,0); }
+      to { transform: translate(-60px,-60px); }
+    }
+
+    .container {
+      max-width: 430px;
+      width: 90%;
+      margin-top: 120px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.25);
+      padding: 35px 40px;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.7s ease;
+      z-index: 1;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      text-decoration: none;
+      background: rgba(0, 174, 255, 0.15);
+      border: 1px solid #00bfff;
+      color: #00d0ff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+      text-shadow: 0 0 10px #00d0ff;
+    }
+
+    .back-btn:hover {
+      background: #00bfff;
+      color: #fff;
+      box-shadow: 0 0 15px #00bfff, 0 0 25px #00bfff;
+    }
+
+    h2 {
+      color: #00bfff;
+      text-align: center;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px #00d0ff;
+    }
+
+    label { display: block; margin-top: 15px; font-size: 1.05em; color: #cfeaff; }
+    select, input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 200, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      color: #dbe8ff;
+      margin-top: 6px;
+      margin-bottom: 18px;
+      outline: none;
+    }
+
+    select:focus, input:focus {
+      border-color: #00bfff;
+      box-shadow: 0 0 10px #00bfff;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(90deg, #007bff, #00baff);
+      color: #fff;
+      border: none;
+      padding: 12px 0;
+      border-radius: 8px;
+      font-size: 1.05em;
+      font-weight: 600;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #0056b3, #0090ff);
+      box-shadow: 0 0 20px #00bfff;
+    }
+
+    .msg { margin-top: 16px; color: #0f0; text-align: center; font-weight: 600; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <a href="javascript:history.back()" class="back-btn">← Back</a>
+
+  <div class="container">
+    <h2>Order Food In Train</h2>
+    <form method="post">
+      <label for="food_item">Food Item:</label>
+      <select name="food_item" id="food_item" required>
+        {% for item in menu_items %}
+          <option value="{{ item.FoodItem }}">{{ item.FoodItem }} (₹{{ item.Price }})</option>
+        {% endfor %}
+      </select>
+
+      <label for="quantity">Quantity:</label>
+      <input type="number" name="quantity" min="1" value="1" required>
+
+      <button type="submit">Order</button>
+    </form>
+    {% if msg %}
+      <div class="msg">{{ msg }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>

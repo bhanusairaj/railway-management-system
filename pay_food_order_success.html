@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Food Order Payment Successful</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: radial-gradient(circle at top left, #001233, #000b24, #000814);
+      color: #dbe8ff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 420px;
+      width: 90%;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.25);
+      padding: 35px;
+      margin-top: 120px;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.8s ease;
+      text-align: center;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      text-decoration: none;
+      background: rgba(0, 174, 255, 0.15);
+      border: 1px solid #00bfff;
+      color: #00d0ff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+      text-shadow: 0 0 10px #00d0ff;
+    }
+
+    .back-btn:hover {
+      background: #00bfff;
+      color: #fff;
+      box-shadow: 0 0 15px #00bfff;
+    }
+
+    h2 {
+      color: #00ffb3;
+      text-shadow: 0 0 10px #00ffb3;
+    }
+
+    .summary {
+      margin: 24px 0;
+      background: rgba(0, 255, 180, 0.1);
+      padding: 14px 18px;
+      border-radius: 8px;
+    }
+
+    .msg {
+      margin-top: 20px;
+      color: #00ffb3;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    a {
+      color: #00bfff;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 5px;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      color: #00ffea;
+      text-shadow: 0 0 10px #00ffea;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <a href="javascript:history.back()" class="back-btn">← Back</a>
+
+  <div class="container">
+    <h2>Payment Successful!</h2>
+    <div class="summary">
+      <strong>Item:</strong> {{ order.FoodItem }}<br>
+      <strong>Quantity:</strong> {{ order.Quantity }}<br>
+      <strong>Total Paid:</strong> ₹{{ order.TotalAmount }}
+    </div>
+    <div class="msg">Your food order has been placed and paid successfully.</div>
+    <a href="{{ url_for('food_order') }}">Order More Food</a> | 
+    <a href="{{ url_for('user_portal') }}">Go to Dashboard</a>
+  </div>
+</body>
+</html>

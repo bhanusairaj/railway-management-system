@@ -1,0 +1,147 @@
+=<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Routes & Train Schedule</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      color: #e8f0ff;
+      background: radial-gradient(circle at top left, #02142a, #032c63, #01132a);
+      background-size: 300% 300%;
+      animation: bgShift 15s ease infinite;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      width: 90%;
+      max-width: 950px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 30px;
+      box-shadow: 0 0 25px rgba(0, 153, 255, 0.25);
+      backdrop-filter: blur(12px);
+    }
+
+    h2 {
+      text-align: center;
+      color: #6fc3ff;
+      text-shadow: 0 0 8px #00aaff;
+      margin-bottom: 25px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 9px 20px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #007bff, #00b4ff);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      box-shadow: 0 0 10px rgba(0,150,255,0.4);
+      transition: 0.25s;
+    }
+
+    .back-btn:hover {
+      box-shadow: 0 0 18px #00baff;
+      transform: translateY(-2px);
+    }
+
+    .route-block {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 18px;
+      margin: 20px 0;
+      box-shadow: 0 0 15px rgba(0, 150, 255, 0.15);
+      overflow-x: auto;
+    }
+
+    .route-title {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #9cd8ff;
+      text-shadow: 0 0 6px #0094ff;
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .route-icon {
+      width: 28px;
+      margin-right: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      color: #e9f6ff;
+    }
+
+    th {
+      background: rgba(0, 120, 255, 0.25);
+      color: #bde4ff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255,255,255,0.04);
+    }
+
+    tr:hover {
+      background: rgba(0, 140, 255, 0.12);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">← Back</a>
+    <h2>🚄 Routes & Train Schedules</h2>
+
+    {% for route in routes %}
+    <div class="route-block">
+      <div class="route-title">
+        <img src="https://img.icons8.com/fluency/48/train.png" class="route-icon">
+        {{ route.RouteName }}
+      </div>
+      <strong>Train:</strong> {{ route.TrainNumber }} - {{ route.TrainName }} ({{ route.TrainType }})
+      <table>
+        <tr>
+          <th>Seq</th>
+          <th>Station</th>
+          <th>Arrival</th>
+          <th>Departure</th>
+          <th>Halt (min)</th>
+          <th>Distance (km)</th>
+        </tr>
+        {% for station in route.stations %}
+        <tr>
+          <td>{{ station.SequenceNumber }}</td>
+          <td>{{ station.StationName }}</td>
+          <td>{{ station.ArrivalTime }}</td>
+          <td>{{ station.DepartureTime }}</td>
+          <td>{{ station.HaltDuration }}</td>
+          <td>{{ station.DistanceFromOrigin }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

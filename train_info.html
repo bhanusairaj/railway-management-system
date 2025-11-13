@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Train Information</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://images.unsplash.com/photo-1535535112387-56ffe8db21ff?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1474') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 40, 0.6);
+      backdrop-filter: blur(3px);
+      z-index: -1;
+    }
+    h2, h3 {
+      text-shadow: 0 0 15px cyan;
+    }
+    form {
+      background: rgba(255, 255, 255, 0.15);
+      display: inline-block;
+      padding: 25px 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,255,255,0.4);
+      backdrop-filter: blur(10px);
+      margin-top: 15px;
+      text-align: left;
+    }
+    input[type="text"], input[type="number"], select {
+      width: 250px;
+      padding: 8px;
+      margin: 5px 0;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.3s;
+    }
+    input[type="text"]:focus, input[type="number"]:focus {
+      box-shadow: 0 0 10px cyan;
+    }
+    input[type="submit"] {
+      background: cyan;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+    input[type="submit"]:hover {
+      background: #00ffff;
+      box-shadow: 0 0 20px cyan;
+    }
+    table {
+      width: 90%;
+      margin: 30px auto;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 15px rgba(0,255,255,0.3);
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    th {
+      background: rgba(0, 255, 255, 0.2);
+      color: #fff;
+      text-shadow: 0 0 5px cyan;
+    }
+    tr:hover {
+      background: rgba(0, 255, 255, 0.15);
+      transition: 0.3s;
+    }
+    .remove-btn input[type="submit"] {
+      background: #ff0040;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px #ff0040;
+    }
+    .remove-btn input[type="submit"]:hover {
+      background: #ff3370;
+      box-shadow: 0 0 20px #ff3370;
+    }
+    a {
+      color: cyan;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin: 20px 0;
+      transition: 0.3s;
+    }
+    a:hover {
+      color: white;
+      text-shadow: 0 0 15px cyan;
+    }
+    .icon-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .icon-title img {
+      width: 45px;
+      filter: drop-shadow(0 0 5px cyan);
+    }
+  </style>
+</head>
+<body>
+  <div class="icon-title">
+    <img src="https://img.icons8.com/color/96/train.png" alt="Train Icon">
+    <h2>Train Information</h2>
+  </div>
+
+  <!-- Add Train Form -->
+  <h3>Add New Train</h3>
+  <form method="POST">
+    <input type="hidden" name="add_train" value="1">
+    <label>🚆 Train Number:</label><br>
+    <input type="text" name="train_no" required><br>
+    <label>🚉 Train Name:</label><br>
+    <input type="text" name="train_name" required><br>
+    <label>🚔 Train Type:</label><br>
+    <input type="text" name="train_type"><br>
+    <label>💺 Total Seats:</label><br>
+    <input type="number" name="total_seats"><br>
+    <label>❄ AC Seats:</label><br>
+    <input type="number" name="ac_seats"><br>
+    <label>🛏 Sleeper Seats:</label><br>
+    <input type="number" name="sleeper_seats"><br>
+    <label>🪑 General Seats:</label><br>
+    <input type="number" name="general_seats"><br>
+    <input type="submit" value="Add Train">
+  </form>
+
+  <hr style="width:80%;border:1px solid cyan;margin:40px auto;">
+
+  <!-- List Trains -->
+  <h3>All Trains</h3>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Number</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Total Seats</th>
+      <th>AC</th>
+      <th>Sleeper</th>
+      <th>General</th>
+      <th>Delete</th>
+    </tr>
+    {% for train in trains %}
+    <tr>
+      <td>{{ train.TrainID }}</td>
+      <td>{{ train.TrainNumber }}</td>
+      <td>{{ train.TrainName }}</td>
+      <td>{{ train.TrainType }}</td>
+      <td>{{ train.TotalSeats }}</td>
+      <td>{{ train.AC_Seats }}</td>
+      <td>{{ train.Sleeper_Seats }}</td>
+      <td>{{ train.General_Seats }}</td>
+      <td class="remove-btn">
+        <form method="POST" style="display:inline;">
+          <input type="hidden" name="delete_train" value="1">
+          <input type="hidden" name="train_id" value="{{ train.TrainID }}">
+          <input type="submit" value="Remove">
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <a href="{{ url_for('admin_dashboard') }}">⬅ Back to Dashboard</a>
+</body>
+</html>

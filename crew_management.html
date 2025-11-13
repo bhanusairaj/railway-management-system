@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crew Management</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: radial-gradient(circle at top, #021B79 0%, #0575E6 100%);
+      background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-attachment: fixed;
+      color: #eaf4ff;
+    }
+    .container {
+      max-width: 750px;
+      margin: 60px auto;
+      background: rgba(10, 25, 60, 0.9);
+      border-radius: 14px;
+      box-shadow: 0 0 25px rgba(0, 153, 255, 0.7);
+      padding: 35px;
+      backdrop-filter: blur(6px);
+    }
+    h2 {
+      color: #64b5ff;
+      text-align: center;
+      text-shadow: 0 0 15px #3ca9ff;
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #4eaaff;
+      margin: 6px 7px 12px 0;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      width: 165px;
+      outline: none;
+    }
+    input::placeholder {
+      color: #b8daff;
+    }
+    button {
+      background: linear-gradient(90deg, #2196F3, #0d47a1);
+      border: none;
+      color: white;
+      border-radius: 8px;
+      padding: 9px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px #2196F3;
+    }
+    button:hover {
+      background: #0b59b4;
+      box-shadow: 0 0 20px #63b3ff;
+    }
+    button.delete-btn {
+      background: linear-gradient(90deg, #ff4b4b, #b91d1d);
+      box-shadow: 0 0 10px #ff4b4b;
+    }
+    button.delete-btn:hover {
+      background: #e03535;
+      box-shadow: 0 0 20px #ff6666;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      color: #e1f0ff;
+    }
+    th, td {
+      padding: 10px 9px;
+      border-bottom: 1px solid #1a3d66;
+      text-align: left;
+    }
+    th {
+      background: rgba(30, 60, 120, 0.9);
+      color: #bde0ff;
+      text-shadow: 0 0 10px #3ca9ff;
+    }
+    tr:nth-child(even) {
+      background: rgba(255,255,255,0.05);
+    }
+    tr:hover {
+      background: rgba(0, 123, 255, 0.15);
+      transition: 0.3s;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 9px 22px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #1c75ff, #0f52a1);
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 0 12px #1c75ff;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #0f52a1;
+      box-shadow: 0 0 16px #4eaaff;
+    }
+    .icons {
+      width: 24px;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">← Back to Dashboard</a>
+    <h2>Crew Management</h2>
+    <form method="post">
+      <input name="name" placeholder="Name" required>
+      <input name="role" placeholder="Role" required>
+      <input name="gender" placeholder="Gender" required>
+      <input name="phone" placeholder="Phone" required>
+      <button type="submit">Add Crew</button>
+      {% if msg %}<span style="color: #4eff88;">{{ msg }}</span>{% endif %}
+    </form>
+    <table>
+      <tr><th>ID</th><th>Name</th><th>Role</th><th>Gender</th><th>Phone</th><th>Action</th></tr>
+      {% for c in crew %}
+      <tr>
+        <td>{{ c.CrewID }}</td>
+        <td>{{ c.Name }}</td>
+        <td>{{ c.Role }}</td>
+        <td>{{ c.Gender }}</td>
+        <td>{{ c.Phone }}</td>
+        <td>
+          <form action="{{ url_for('delete_crew', crewid=c.CrewID) }}" method="post" style="display:inline;">
+            <button type="submit" class="delete-btn" onclick="return confirm('Delete this crew member?');">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

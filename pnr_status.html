@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Check PNR Status - Railway Management System</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0; padding: 0;
+      background: radial-gradient(circle at top right, #001233 0%, #001a4d 35%, #002b7a 70%, #000814 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      color: #dbe8ff;
+    }
+
+    body::before, body::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.5;
+    }
+    body::before {
+      top: 15%; left: 10%;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, #00aaff, transparent 70%);
+    }
+    body::after {
+      bottom: 10%; right: 8%;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, #0077ff, transparent 70%);
+      filter: blur(110px);
+      opacity: 0.45;
+    }
+
+    .pnr-container {
+      width: 420px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(0, 170, 255, 0.35);
+      border-radius: 16px;
+      backdrop-filter: blur(14px);
+      padding: 25px 30px 30px 30px;
+      box-shadow: 0 0 25px rgba(0, 150, 255, 0.25);
+      text-align: center;
+      animation: fadeIn 1s ease;
+      position: relative;
+    }
+
+    .back-btn {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(90deg, #007bff, #00baff);
+      color: white;
+      font-size: 0.95em;
+      padding: 8px 18px;
+      border-radius: 8px;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      box-shadow: 0 0 12px rgba(0, 170, 255, 0.4);
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(90deg, #00baff, #007bff);
+      transform: scale(1.05);
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      color: #66ccff;
+      text-shadow: 0 0 10px #00b7ff;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      text-align: left;
+      margin: 15px 0 6px;
+      color: #bbd8ff;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 8px;
+      border-radius: 6px;
+      border: 1.5px solid #00aaff;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 1em;
+      transition: 0.3s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      box-shadow: 0 0 8px #00baff;
+    }
+
+    .check-btn {
+      width: 100%;
+      margin-top: 20px;
+      background: linear-gradient(90deg, #007bff, #00baff);
+      color: white;
+      font-size: 1.05em;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 0;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 15px rgba(0, 180, 255, 0.4);
+    }
+
+    .check-btn:hover {
+      background: linear-gradient(90deg, #00baff, #007bff);
+      transform: scale(1.03);
+    }
+
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 100%;
+      color: #dbe8ff;
+      font-size: 0.95em;
+    }
+
+    th, td {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 14px;
+    }
+
+    th {
+      background: rgba(0, 100, 255, 0.2);
+      color: #80d4ff;
+    }
+
+    .notfound {
+      color: #ff6b6b;
+      text-align: center;
+      margin-top: 18px;
+      font-weight: 600;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="pnr-container">
+    <a href="user_portal" class="back-btn">← Back to Dashboard</a>
+
+    <h2>Check PNR Status</h2>
+
+    <form method="POST">
+      <label for="pnr_number">Enter Your PNR Number:</label>
+      <input type="text" id="pnr_number" name="pnr_number" placeholder="e.g. AB12CD3456" required>
+      <button type="submit" class="check-btn">Check Status</button>
+    </form>
+
+    {% if booking %}
+    <table>
+      <tr><th>PNR Number</th><td>{{ booking.PNR_Number }}</td></tr>
+      <tr><th>Status</th><td>{{ booking.BookingStatus }}</td></tr>
+      <tr><th>Journey Date</th><td>{{ booking.JourneyDate }}</td></tr>
+      <tr><th>Train #</th><td>{{ booking.TrainNumber }}</td></tr>
+      <tr><th>Train Name</th><td>{{ booking.TrainName }}</td></tr>
+      <tr><th>From</th><td>{{ booking.FromStation }}</td></tr>
+      <tr><th>To</th><td>{{ booking.ToStation }}</td></tr>
+      <tr><th>Class</th><td>{{ booking.TicketClass }}</td></tr>
+      <tr><th>Payment Status</th><td>{{ booking.PaymentStatus }}</td></tr>
+      <tr><th>Fare</th><td>{{ booking.TotalFare }}</td></tr>
+    </table>
+    {% elif msg %}
+    <div class="notfound">{{ msg }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Station Master Panel</title>
+  <style>
+    body { font-family:'Poppins',sans-serif; background: #f9fafe;}
+    .container { max-width:820px; margin:49px auto; background:#fff; border-radius:10px; box-shadow:0 1px 12px #aac6db; padding: 26px;}
+    h2 { color:#234966; margin-bottom:18px;}
+    table { width:100%; border-collapse:collapse; }
+    th, td { padding:10px 12px; text-align:left; border-bottom:1px solid #eee;}
+    th { background:#244a90; color:#fff;}
+    tr:nth-child(even) { background: #f1f4fa;}
+    tr:hover {background: #e2f0fa;}
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 9px 22px;
+      border-radius: 6px;
+      background: #2574c0;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.03em;
+      text-decoration: none;
+      border: none;
+      transition: background 0.2s;
+    }
+    .back-btn:hover {
+      background: #143563;
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">← Back to Dashboard</a>
+    <h2>Station Master - Today's Train Schedule</h2>
+    <table>
+      <tr>
+        <th>Train No.</th>
+        <th>Name</th>
+        <th>Route</th>
+        <th>Arrival Time</th>
+        <th>Departure Time</th>
+        <th>Platform</th>
+      </tr>
+      {% for t in schedule %}
+      <tr>
+        <td>{{ t.TrainNumber }}</td>
+        <td>{{ t.TrainName }}</td>
+        <td>{{ t.RouteName }}</td>
+        <td>{{ t.ArrivalTime }}</td>
+        <td>{{ t.DepartureTime }}</td>
+        <td>{{ t.Platform }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

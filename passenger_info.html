@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Passenger Information - Railway Management System</title>
+</head>
+<body style="font-family:'Poppins',sans-serif;margin:0;
+  background:linear-gradient(135deg,#001a33,#003366,#001a33);
+  color:#e8f1ff;">
+
+  <div style="max-width:1050px;margin:60px auto;
+    background:rgba(255,255,255,0.08);
+    border-radius:14px;
+    border:1px solid rgba(0,160,255,0.35);
+    box-shadow:0 0 25px rgba(0,140,255,0.25);
+    padding:28px 34px;
+    backdrop-filter:blur(12px);">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <a href='{{ url_for("admin_dashboard") }}' 
+        style="display:inline-flex;align-items:center;
+        gap:8px;background:linear-gradient(90deg,#007bff,#00aaff);
+        color:#fff;text-decoration:none;
+        padding:9px 18px;border-radius:6px;font-weight:500;
+        transition:0.3s;">
+        <img src='https://img.icons8.com/fluency/24/return.png' style="vertical-align:middle;">
+        Back
+      </a>
+      <img src="https://img.icons8.com/color/48/train.png" style="width:48px;filter:drop-shadow(0 0 6px #00baff);">
+    </div>
+
+    <h2 style="text-align:center;margin:22px 0 18px;
+      color:#66ccff;text-shadow:0 0 6px #008cff;">
+      All Passengers Information (with Booking Summary)
+    </h2>
+
+    <table style="width:100%;border-collapse:collapse;font-size:0.93em;
+      background:rgba(255,255,255,0.05);border-radius:8px;overflow:hidden;">
+      <tr style="background:linear-gradient(90deg,#0077ff,#00aaff);color:#fff;">
+        <th style="padding:10px 12px;text-align:left;">User ID</th>
+        <th style="padding:10px 12px;text-align:left;">Name</th>
+        <th style="padding:10px 12px;text-align:left;">Email</th>
+        <th style="padding:10px 12px;text-align:left;">Mobile</th>
+        <th style="padding:10px 12px;text-align:left;">Date of Birth</th>
+        <th style="padding:10px 12px;text-align:left;">Gender</th>
+        <th style="padding:10px 12px;text-align:left;"># Trains Booked</th>
+        <th style="padding:10px 12px;text-align:left;"># Total Bookings</th>
+        <th style="padding:10px 12px;text-align:left;">Action</th>
+      </tr>
+
+      {% for p in passengers %}
+      <tr style="background:rgba(0,20,50,0.4);border-bottom:1px solid rgba(255,255,255,0.08);
+        transition:0.3s;" 
+        onmouseover="this.style.background='rgba(0,150,255,0.15)';"
+        onmouseout="this.style.background='rgba(0,20,50,0.4)';">
+
+        <td style="padding:10px 12px;">{{ p.UserID }}</td>
+        <td style="padding:10px 12px;">{{ p.UserName }}</td>
+        <td style="padding:10px 12px;">{{ p.UserEmail }}</td>
+        <td style="padding:10px 12px;">{{ p.UserMobile }}</td>
+        <td style="padding:10px 12px;">{{ p.DateOfBirth }}</td>
+        <td style="padding:10px 12px;">{{ p.Gender }}</td>
+        <td style="padding:10px 12px;">{{ p.NumTrainsBooked }}</td>
+        <td style="padding:10px 12px;">{{ p.TotalBookings }}</td>
+        <td style="padding:10px 12px;">
+          <form action='{{ url_for("delete_passenger", userid=p.UserID) }}' method="post" style="display:inline;">
+            <button type="submit"
+              style="background:linear-gradient(90deg,#ff414d,#ff737d);
+              border:none;border-radius:6px;padding:6px 12px;
+              color:#fff;cursor:pointer;font-size:0.9em;
+              transition:0.3s;"
+              onmouseover="this.style.background='linear-gradient(90deg,#ff606a,#ff8b94)';"
+              onmouseout="this.style.background='linear-gradient(90deg,#ff414d,#ff737d)';"
+              onclick="return confirm('Delete this passenger?');">
+              <img src='https://img.icons8.com/fluency/20/delete-forever.png' style="vertical-align:middle;margin-right:4px;">
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

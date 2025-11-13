@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Profile - Railway Management System</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: radial-gradient(circle at top left, #0a1a3f, #00122e 60%, #000814);
+      overflow-x: hidden;
+      color: #fff;
+    }
+
+    /* Moving neon glow background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 25% 25%, rgba(0, 128, 255, 0.2), transparent 60%),
+                  radial-gradient(circle at 75% 75%, rgba(0, 255, 255, 0.15), transparent 60%);
+      animation: moveGlow 10s infinite alternate ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes moveGlow {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-60px, -60px); }
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      text-decoration: none;
+      background: rgba(0, 174, 255, 0.15);
+      border: 1px solid #00bfff;
+      color: #00d0ff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 10px #00d0ff;
+      z-index: 10;
+    }
+
+    .back-btn:hover {
+      background: #00bfff;
+      color: #fff;
+      box-shadow: 0 0 15px #00bfff, 0 0 25px #00bfff;
+    }
+
+    .container {
+      max-width: 450px;
+      margin-top: 110px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      border-radius: 15px;
+      padding: 35px 40px;
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.3);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.8s ease;
+      z-index: 1;
+    }
+
+    h2 {
+      color: #00bfff;
+      font-size: 1.6em;
+      text-align: center;
+      margin-bottom: 25px;
+      text-shadow: 0 0 12px #00d0ff;
+    }
+
+    .profile-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      color: #cfeaff;
+    }
+
+    .profile-table th, .profile-table td {
+      text-align: left;
+      padding: 10px 8px;
+      font-size: 0.95em;
+    }
+
+    .profile-table th {
+      color: #82cfff;
+      width: 40%;
+    }
+
+    .profile-table td {
+      background: rgba(0, 40, 80, 0.3);
+      border-radius: 6px;
+      padding: 10px;
+    }
+
+    p {
+      text-align: center;
+      color: #ffcccc;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <a href="user_portal" class="back-btn">← Back to Dashboard</a>
+
+  <div class="container">
+    <h2>Your Profile Information</h2>
+    {% if user %}
+      <table class="profile-table">
+        <tr>
+          <th>Name</th>
+          <td>{{ user.UserName }}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>{{ user.UserEmail }}</td>
+        </tr>
+        <tr>
+          <th>Mobile</th>
+          <td>{{ user.UserMobile }}</td>
+        </tr>
+        <tr>
+          <th>Date of Birth</th>
+          <td>{{ user.DateOfBirth }}</td>
+        </tr>
+        <tr>
+          <th>Gender</th>
+          <td>{{ user.Gender }}</td>
+        </tr>
+      </table>
+    {% else %}
+      <p>No profile details found.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

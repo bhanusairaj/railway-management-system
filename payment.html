@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #6a88ff, #a0e0e9);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 350px;
+            background: white;
+            margin: 40px auto;
+            border-radius: 10px;
+            padding: 30px 30px 20px 30px;
+            box-shadow: 0 2px 18px 2px #8fb9ec;
+        }
+        h2 {
+            text-align: center;
+            color: #2853a8;
+        }
+        .pay-btns {
+            margin: 10px 0 20px 0;
+            text-align: center;
+        }
+        .pay-btn {
+            border: 1px solid #18a4c3;
+            background: white;
+            color: #18a4c3;
+            border-radius: 5px;
+            padding: 7px 21px;
+            margin: 0 10px 0 0;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .pay-btn.selected, .pay-btn:hover {
+            background: #18a4c3;
+            color: white;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 8px 0 3px 2px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%; padding: 8px; border-radius: 4px;
+            border: 1px solid #bbb; margin-bottom: 8px;
+        }
+        .paynow-btn {
+            width: 100%;
+            padding: 10px 0;
+            background: #377ce8;
+            color: white;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .paynow-btn:hover {
+            background: #295fa8;
+        }
+    </style>
+    <script>
+        function selectMethod(method) {
+            document.getElementById('payment_method').value = method;
+            document.getElementById('btn_card').classList.remove('selected');
+            document.getElementById('btn_upi').classList.remove('selected');
+            document.getElementById('btn_cash').classList.remove('selected');
+            document.getElementById('card_fields').style.display = "none";
+            document.getElementById('upi_fields').style.display = "none";
+            document.getElementById('cash_fields').style.display = "none";
+            if (method === "Card") {
+                document.getElementById('btn_card').classList.add('selected');
+                document.getElementById('card_fields').style.display = "block";
+            } else if (method === "UPI") {
+                document.getElementById('btn_upi').classList.add('selected');
+                document.getElementById('upi_fields').style.display = "block";
+            } else {
+                document.getElementById('btn_cash').classList.add('selected');
+                document.getElementById('cash_fields').style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h2>Payment Confirmation</h2>
+    <p>Train ID: {{ booking.train_id }}</p>
+    <p>From: {{ booking.from_station }}</p>
+    <p>To: {{ booking.to_station }}</p>
+    <p>Date: {{ booking.journey_date }}</p>
+    <p>Class: {{ booking.ticket_class }}</p>
+    <p>Fare: ₹{{ booking.total_fare }}</p>
+    <form method="POST">
+        <input type="hidden" name="payment_method" id="payment_method" value="">
+        <div class="pay-btns">
+            <button type="button" class="pay-btn" id="btn_card" onclick="selectMethod('Card')">Card</button>
+            <button type="button" class="pay-btn" id="btn_upi" onclick="selectMethod('UPI')">UPI</button>
+            <button type="button" class="pay-btn" id="btn_cash" onclick="selectMethod('Cash')">Cash</button>
+        </div>
+
+        <div id="card_fields" style="display:none;">
+            <label>Card Number</label>
+            <input type="text" name="card_number" maxlength="16">
+            <label>Name on Card</label>
+            <input type="text" name="card_name">
+            <label>Expiry Date</label>
+            <input type="text" name="expiry_date" placeholder="MM/YY">
+            <label>CVV</label>
+            <input type="text" name="cvv" maxlength="4">
+        </div>
+
+        <div id="upi_fields" style="display:none;">
+            <label>UPI ID</label>
+            <input type="text" name="upi_id" placeholder="yourname@upi">
+        </div>
+
+        <div id="cash_fields" style="display:none;">
+            <label>Pay at Counter</label>
+            <input type="text" value="Pay at counter during boarding" readonly>
+        </div>
+
+        <label>Amount (₹)</label>
+        <input type="text" name="amount" value="{{ booking.total_fare }}" readonly>
+        <button type="submit" class="paynow-btn" name="pay_now">Pay Now</button>
+    </form>
+</div>
+<script>
+    // Optional: default to Card tab active
+    selectMethod('Card');
+</script>
+</body>
+</html>

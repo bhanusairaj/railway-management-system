@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Submit Feedback / Complaint - Railway Management System</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top left, #0a1a3f, #00122e 60%, #000814);
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-x: hidden;
+    }
+
+    /* Glowing background animation */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(0, 128, 255, 0.2), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(0, 255, 255, 0.15), transparent 60%);
+      animation: moveGlow 10s infinite alternate ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes moveGlow {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-50px, -50px); }
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      text-decoration: none;
+      background: rgba(0, 174, 255, 0.15);
+      border: 1px solid #00bfff;
+      color: #00d0ff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 10px #00d0ff;
+      z-index: 10;
+    }
+
+    .back-btn:hover {
+      background: #00bfff;
+      color: #fff;
+      box-shadow: 0 0 15px #00bfff, 0 0 25px #00bfff;
+    }
+
+    .container {
+      max-width: 520px;
+      margin-top: 100px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.3);
+      padding: 40px 45px;
+      backdrop-filter: blur(10px);
+      z-index: 1;
+    }
+
+    h2 {
+      color: #00bfff;
+      text-align: center;
+      font-size: 1.6em;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px #00d0ff;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 500;
+      color: #a4dfff;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      border-radius: 8px;
+      background: rgba(0, 20, 40, 0.7);
+      color: #e0f7ff;
+      font-size: 0.95em;
+      transition: 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #00d0ff;
+      outline: none;
+      background: rgba(0, 40, 80, 0.9);
+      box-shadow: 0 0 8px #00d0ff;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #007bff, #00d4ff);
+      color: #fff;
+      font-size: 1.05em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+      text-shadow: 0 0 5px #fff;
+    }
+
+    button:hover {
+      box-shadow: 0 0 15px #00d4ff, 0 0 30px #007bff;
+    }
+
+    .msg {
+      margin-top: 18px;
+      color: #00ffb3;
+      text-align: center;
+      font-weight: 500;
+      background: rgba(0, 255, 204, 0.1);
+      border-radius: 6px;
+      padding: 10px 0;
+      box-shadow: 0 0 8px rgba(0, 255, 204, 0.3);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <a href="user_portal" class="back-btn">← Back to Dashboard</a>
+  
+  <div class="container">
+    <h2>Submit Feedback / Complaint</h2>
+    <form method="post">
+      <label for="subject">Subject:</label>
+      <input type="text" name="subject" placeholder="Enter your subject" required maxlength="100" />
+      
+      <label for="message">Your Feedback / Complaint:</label>
+      <textarea name="message" placeholder="Write your message here..." required maxlength="500"></textarea>
+      
+      <button type="submit">Submit</button>
+    </form>
+    {% if msg %}
+      <div class="msg">{{ msg }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>
